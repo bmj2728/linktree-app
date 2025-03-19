@@ -58,9 +58,7 @@ This application provides a clean, customizable single-page website to organize 
 
 2. **Create or download the docker-compose.yml file**:
 
-   ```bash
-   # Create docker-compose.yml
-   cat > docker-compose.yml << 'EOF'
+   ```yaml
    version: '3'
    
    services:
@@ -77,14 +75,11 @@ This application provides a clean, customizable single-page website to organize 
          - CONFIG_PATH=/config/config.yaml
          - TEMPLATES_PATH=/templates
          - AVATAR_PATH=/config/avatar.png
-   EOF
    ```
 
 3. **Create or download the configuration file**:
 
-   ```bash
-   # Create a sample config.yaml
-   cat > config/config.yaml << 'EOF'
+   ```yaml
    # Basic Information
    title: "My Links"
    name: "Your Name"
@@ -123,7 +118,6 @@ This application provides a clean, customizable single-page website to organize 
    settings:
      animation: true
      show_social_icons: true
-   EOF
    ```
 
 4. **Add your avatar image**:
