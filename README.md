@@ -6,7 +6,7 @@
 
 A self-hosted, customizable link management page similar to Linktree. Create your own personalized landing page with organized links, custom themes, and section headings - all configurable through simple YAML files.
 
-![Linktree App Screenshot](https://via.placeholder.com/800x400?text=Linktree+App+Screenshot)
+![Linktree App Screenshot](assets/linktree-screenshot.png)
 
 ## Overview
 
@@ -34,204 +34,251 @@ This application provides a clean, customizable single-page website to organize 
 - **Docker support** with runtime configuration injection
 - **Volume mapping** for config, custom themes, and avatar image
 
-## Quick Start
+## Deployment Guide
 
-### Using Docker Compose (Recommended)
+### Prerequisites
 
-1. Clone this repository:
+- Docker and Docker Compose installed on your server
+- Basic understanding of YAML file format
+- A profile image (avatar) in PNG format (optional)
+
+### Quick Deployment with Docker Compose
+
+1. **Create the necessary directory structure**:
+
    ```bash
-   git clone https://github.com/bmj2728/linktree-app.git
-   cd linktree-app
+   # Create base directory for your deployment
+   mkdir -p linktree-deployment
+   cd linktree-deployment
+   
+   # Create configuration directory
+   mkdir -p config
+   mkdir -p templates/custom
    ```
 
-2. Edit the configuration file in `config/config.yaml` with your information and links
+2. **Create or download the docker-compose.yml file**:
 
-3. Replace `config/avatar.png` with your profile image
+   ```bash
+   # Create docker-compose.yml
+   cat > docker-compose.yml << 'EOF'
+   version: '3'
+   
+   services:
+     linktree:
+       image: bmj2728/linktree-app:latest
+       container_name: linktree-app
+       ports:
+         - "5000:5000"
+       volumes:
+         - ./config:/config
+         - ./templates/custom:/templates/custom
+       restart: unless-stopped
+       environment:
+         - CONFIG_PATH=/config/config.yaml
+         - TEMPLATES_PATH=/templates
+         - AVATAR_PATH=/config/avatar.png
+   EOF
+   ```
 
-4. Run with Docker Compose:
+3. **Create or download the configuration file**:
+
+   ```bash
+   # Create a sample config.yaml
+   cat > config/config.yaml << 'EOF'
+   # Basic Information
+   title: "My Links"
+   name: "Your Name"
+   description: "Your Description or Tagline"
+   
+   # Theme Configuration (options: default, dark, minimal, midnight)
+   theme: "default"
+   
+   # Links with sections
+   links:
+     - title: "My Website"
+       url: "https://example.com"
+       icon: "fas fa-globe"
+       section: "Online Presence"
+       description: "Visit my personal website"
+     
+     - title: "GitHub"
+       url: "https://github.com/yourusername"
+       icon: "fab fa-github"
+       section: "Online Presence"
+       description: "Check out my code repositories"
+   
+     - title: "LinkedIn"
+       url: "https://linkedin.com/in/yourusername"
+       icon: "fab fa-linkedin"
+       section: "Professional"
+       description: "My professional profile"
+   
+     - title: "Contact Me"
+       url: "mailto:your@email.com"
+       icon: "fas fa-envelope"
+       section: "Get in Touch"
+       description: "Send me an email"
+   
+   # Additional Settings
+   settings:
+     animation: true
+     show_social_icons: true
+   EOF
+   ```
+
+4. **Add your avatar image**:
+
+   ```bash
+   # Copy your avatar image to the config directory
+   cp /path/to/your/avatar.png config/avatar.png
+   ```
+
+5. **Start the container**:
+
    ```bash
    docker-compose up -d
    ```
 
-5. Access your Linktree page at `http://localhost:5000`
+6. **Access your Linktree page** at `http://your-server-ip:5000`
 
-### Using Pre-built Docker Images
+### Alternative Deployment with Direct Docker Run
 
-Pull and run from Docker Hub:
+If you prefer not to use Docker Compose, you can run the container directly:
+
 ```bash
-docker pull bmj2728/linktree-app:latest
-docker run -p 5000:5000 -v /path/to/your/config:/config -v /path/to/your/custom/templates:/templates/custom bmj2728/linktree-app:latest
+# Create the necessary directories
+mkdir -p ./config ./templates/custom
+
+# Create the config.yaml file (see step 3 above)
+# Add your avatar.png file (see step 4 above)
+
+# Run the Docker container
+docker run -d \
+  --name linktree-app \
+  -p 5000:5000 \
+  -v $(pwd)/config:/config \
+  -v $(pwd)/templates/custom:/templates/custom \
+  bmj2728/linktree-app:latest
 ```
 
-Or from GitHub Container Registry:
-```bash
-docker pull ghcr.io/bmj2728/linktree-app:latest
-docker run -p 5000:5000 -v /path/to/your/config:/config -v /path/to/your/custom/templates:/templates/custom ghcr.io/bmj2728/linktree-app:latest
-```
+## Customization Guide
 
-## Project Structure
+### Modifying Your Links
 
-```
-linktree-app/
-├── app/
-│   ├── app.py              # Main Flask application
-│   └── requirements.txt    # Python dependencies
-├── config/
-│   ├── avatar.png          # User avatar image
-│   └── config.yaml         # Main configuration file
-├── templates/
-│   ├── default/            # Default theme templates
-│   │   ├── default_theme_config.yaml
-│   │   ├── dark_theme_config.yaml
-│   │   ├── minimal_theme_config.yaml
-│   │   └── brianjipson_theme_config.yaml
-│   └── custom/             # Custom theme templates
-│       ├── example_theme_config.yaml  # Example custom template
-│       └── README.md       # Documentation for custom templates
-├── Dockerfile              # Docker image definition
-├── docker-compose.yml      # Docker Compose configuration
-└── LICENSE                 # MIT License
-```
+Edit the `config/config.yaml` file to update your links. You can add as many links as you need, organizing them into sections:
 
-## Configuration
-
-Edit `config/config.yaml` to customize your linktree page:
-- Basic information (title, name, description)
-- Theme selection
-- Links with icons, sections, and descriptions
-- Additional settings
-
-Example configuration:
 ```yaml
-# Basic Information
-title: "My Linktree"
-name: "John Doe"
-description: "Web Developer & Designer"
-
-# Theme Configuration
-theme: "brianjipson"  # Using the Brian Jipson inspired theme
-
-# Links with sections
 links:
-  - title: "Portfolio Website"
-    url: "https://example.com/portfolio"
-    icon: "fas fa-globe"
-    section: "My Projects"
-    description: "Check out my latest web development work"
-  
-  - title: "GitHub"
-    url: "https://github.com/johndoe"
-    icon: "fab fa-github"
-    section: "My Projects"
-    description: "View my open source contributions"
+  - title: "Link Title"
+    url: "https://link-url.com"
+    icon: "fas fa-icon-name"  # Font Awesome icon name
+    section: "Section Name"    # Optional, for organizing links
+    description: "Description text"  # Optional
 ```
 
-## Available Themes
+### Available Themes
 
-The application comes with several pre-configured themes:
+The application comes with four pre-configured themes:
 
 | Theme | Description |
 |-------|-------------|
 | **default** | Clean, minimal design with blue links |
 | **dark** | Dark mode theme with light text |
 | **minimal** | Ultra-minimalist design with subtle styling |
-| **brianjipson** | Dark navy theme with colored card borders, section headings, and descriptions (inspired by linktree.brianjipson.com) |
+| **midnight** | Dark navy theme with colored card borders, section headings, and descriptions |
 
-### Theme Customization
-
-Themes are configured using simple YAML files that don't require any CSS knowledge. You can customize:
-
-- Background and text colors
-- Link card styling (colors, borders, shadows)
-- Avatar styling
-- Container styling
-- Animation effects
-- Section headings
-- Card colors for borders
-
-See `templates/custom/README.md` for detailed instructions on creating custom themes.
-
-## Section Headings
-
-The Brian Jipson inspired theme supports section headings to organize your links. Simply add a `section` property to your links in the config.yaml file:
+To change the theme, modify the `theme` value in your `config.yaml`:
 
 ```yaml
-links:
-  - title: "GitHub"
-    url: "https://github.com/username"
-    icon: "fab fa-github"
-    section: "My Projects"
-    description: "View my open source contributions"
+# Theme Configuration
+theme: "dark"  # Change to: default, dark, minimal, or midnight
 ```
 
-## Link Descriptions
+### Custom Avatar
 
-You can add descriptions to your links to provide additional context:
+Replace the `config/avatar.png` with your own image to personalize your page:
 
-```yaml
-links:
-  - title: "Portfolio"
-    url: "https://example.com/portfolio"
-    icon: "fas fa-globe"
-    description: "Check out my latest web development work"
+```bash
+cp /path/to/your/image.png config/avatar.png
 ```
 
-## Docker Deployment Options
+For best results, use a square image (at least 300x300 pixels).
 
-### Build and Deploy Locally
+### Creating a Custom Theme
 
-1. Build the Docker image:
+You can create your own theme by adding a YAML file to the `templates/custom` directory:
+
+1. Create a theme configuration file:
+
    ```bash
-   docker build -t linktree-app:latest .
+   touch templates/custom/mytheme_theme_config.yaml
    ```
 
-2. Run the container:
-   ```bash
-   docker run -p 5000:5000 -v $(pwd)/config:/config -v $(pwd)/templates/custom:/templates/custom linktree-app:latest
+2. Edit the file with your custom theme settings:
+
+   ```yaml
+   # Basic colors
+   background_color: "#f5f5f5"  # Page background
+   container_background: "#ffffff"  # Content container background
+   text_color: "#333333"  # Main text color
+   description_color: "#666666"  # Description text color
+   
+   # Link styling
+   link_style:
+     background_color: "#4a86e8"  # Card background
+     text_color: "#ffffff"  # Link text color
+     description_color: "rgba(255,255,255,0.8)"  # Description color
+     border_radius: "8px"  # Card corner roundness
+     shadow: true  # Enable shadows
+   
+   # Card styling
+   card_style:
+     padding: "16px 20px"  # Internal card padding
+     margin_bottom: "16px"  # Space between cards
+     display_icon: true  # Show icons
+     icon_color: "#ffffff"  # Icon color
+     icon_size: "24px"  # Icon size
+   
+   # Avatar styling
+   avatar_style:
+     size: "120px"  # Avatar size
+     border: "4px solid #ffffff"  # Avatar border
+     shadow: true  # Avatar shadow
+   
+   # Animation
+   animations:
+     link_hover: true  # Hover effect
+     page_load: true  # Page load animation
    ```
 
-### Push to Docker Hub and GitHub Container Registry
+3. Update your `config.yaml` to use your custom theme:
 
-1. Build with both tags:
-   ```bash
-   docker build -t bmj2728/linktree-app:latest -t ghcr.io/bmj2728/linktree-app:latest .
+   ```yaml
+   # Theme Configuration
+   theme: "mytheme"  # Use your custom theme name (without _theme_config.yaml)
    ```
 
-2. Push to Docker Hub:
-   ```bash
-   docker push bmj2728/linktree-app:latest
-   ```
+4. Restart the container to apply the changes:
 
-3. Push to GitHub Container Registry:
-   ```bash
-   docker push ghcr.io/bmj2728/linktree-app:latest
-   ```
-
-## Making Changes
-
-To update your linktree page:
-1. Edit the configuration files or themes
-2. Restart the container to apply changes:
    ```bash
    docker-compose restart
    ```
 
-No rebuilding of the application or Docker image is required for configuration changes.
+## Icon Selection
 
-## Icon Support
+The application supports [Font Awesome icons](https://fontawesome.com/icons). To use an icon:
 
-The application supports Font Awesome icons. You can specify icons for each link in your config.yaml file:
+1. Browse the Font Awesome library to find an icon you like
+2. Note the icon name (e.g., `fa-github`)
+3. Add the appropriate prefix to the icon name in your config:
+   - For solid icons: `fas fa-[icon-name]` (e.g., `fas fa-globe`)
+   - For brand icons: `fab fa-[icon-name]` (e.g., `fab fa-github`)
 
-```yaml
-links:
-  - title: "GitHub"
-    url: "https://github.com/username"
-    icon: "fab fa-github"
-```
+## Advanced Configuration
 
-Visit [Font Awesome](https://fontawesome.com/icons) to browse available icons.
+### Environment Variables
 
-## Environment Variables
+You can customize the application's behavior with these environment variables:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -239,15 +286,66 @@ Visit [Font Awesome](https://fontawesome.com/icons) to browse available icons.
 | `TEMPLATES_PATH` | Path to the templates directory | `/templates` |
 | `AVATAR_PATH` | Path to the avatar image | `/config/avatar.png` |
 
-## Contributing
+Add these to your docker-compose.yml if you need to change the default paths.
 
-Contributions are welcome! Feel free to submit a Pull Request.
+### Custom Ports
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+To use a different port (e.g., port 8080 instead of 5000), modify your docker-compose.yml:
+
+```yaml
+services:
+  linktree:
+    # ... other settings
+    ports:
+      - "8080:5000"  # Maps host port 8080 to container port 5000
+```
+
+### Using a Reverse Proxy
+
+For production use, we recommend setting up a reverse proxy (Nginx, Traefik, etc.) with HTTPS. Example Nginx configuration:
+
+```nginx
+server {
+    listen 80;
+    server_name links.yourdomain.com;
+    
+    location / {
+        proxy_pass http://localhost:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+## Troubleshooting
+
+### Container won't start
+
+Check that your configuration files have the correct permissions:
+
+```bash
+chmod 644 config/config.yaml
+chmod 644 config/avatar.png
+```
+
+### Theme not applying correctly
+
+Ensure the theme name in your config.yaml matches one of the available themes or your custom theme name (without the _theme_config.yaml suffix).
+
+### Changes not reflecting
+
+After making changes to configuration files:
+
+```bash
+docker-compose restart
+```
+
+If that doesn't work, try rebuilding the container:
+
+```bash
+docker-compose down
+docker-compose up -d
+```
 
 ## License
 

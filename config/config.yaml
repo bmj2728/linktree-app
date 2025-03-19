@@ -6,7 +6,7 @@ name: "John Doe"
 description: "Web Developer & Designer"
 
 # Theme Configuration
-theme: "brianjipson"  # Using the new Brian Jipson inspired theme
+theme: "midnight"  # Using the deep blue theme
 
 # Links with sections
 links:
