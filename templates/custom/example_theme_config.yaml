@@ -1,0 +1,45 @@
+# Example Custom Theme Configuration
+
+# Basic colors
+background_color: "#f0f4f8"
+container_background: "rgba(255, 255, 255, 0.9)"
+text_color: "#2d3748"
+description_color: "#4a5568"
+
+# Link styling
+link_style:
+  background_color: "#4299e1"
+  text_color: "#ffffff"
+  border_radius: "10px"
+  border: "none"
+  shadow: true
+  hover:
+    transform: true
+    background_color: "#3182ce"
+    shadow_increase: true
+
+# Card styling
+card_style:
+  padding: "16px 20px"
+  margin_bottom: "14px"
+  display_icon: true
+  icon_position: "left"
+
+# Avatar styling
+avatar_style:
+  size: "130px"
+  border: "4px solid #fff"
+  shadow: true
+
+# Container styling
+container_style:
+  max_width: "600px"
+  padding: "35px 25px"
+  border_radius: "15px"
+  shadow: true
+  backdrop_filter: true
+
+# Animation
+animations:
+  link_hover: true
+  page_load: true

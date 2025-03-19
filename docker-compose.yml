@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  linktree:
+    image: bmj2728/linktree-app:latest
+    container_name: linktree-app
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./config:/config
+      - ./templates/custom:/templates/custom
+    restart: unless-stopped
+    environment:
+      - CONFIG_PATH=/config/config.yaml
+      - TEMPLATES_PATH=/templates
+      - AVATAR_PATH=/config/avatar.png

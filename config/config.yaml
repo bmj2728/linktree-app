@@ -1,0 +1,58 @@
+# Linktree Application Configuration
+
+# Basic Information
+title: "My Linktree"
+name: "John Doe"
+description: "Web Developer & Designer"
+
+# Theme Configuration
+theme: "brianjipson"  # Using the new Brian Jipson inspired theme
+
+# Links with sections
+links:
+  - title: "Portfolio Website"
+    url: "https://example.com/portfolio"
+    icon: "fas fa-globe"
+    section: "My Projects"
+    description: "Check out my latest web development work"
+  
+  - title: "GitHub"
+    url: "https://github.com/johndoe"
+    icon: "fab fa-github"
+    section: "My Projects"
+    description: "View my open source contributions"
+  
+  - title: "LinkedIn"
+    url: "https://linkedin.com/in/johndoe"
+    icon: "fab fa-linkedin"
+    section: "My Projects"
+    description: "Connect with me professionally"
+  
+  - title: "Twitter"
+    url: "https://twitter.com/johndoe"
+    icon: "fab fa-twitter"
+    section: "Social Media"
+    description: "Follow me for updates"
+  
+  - title: "Instagram"
+    url: "https://instagram.com/johndoe"
+    icon: "fab fa-instagram"
+    section: "Social Media"
+    description: "See my photos and stories"
+  
+  - title: "Blog"
+    url: "https://example.com/blog"
+    icon: "fas fa-rss"
+    section: "Latest Content"
+    description: "Read my latest articles on web development"
+  
+  - title: "Contact Me"
+    url: "mailto:john@example.com"
+    icon: "fas fa-envelope"
+    section: "Latest Content"
+    description: "Get in touch for collaborations or questions"
+
+# Additional Settings
+settings:
+  animation: true
+  show_social_icons: true

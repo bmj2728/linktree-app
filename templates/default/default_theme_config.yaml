@@ -1,0 +1,44 @@
+# Theme Configuration System
+
+# Basic colors
+background_color: "#f5f5f5"
+container_background: "#ffffff"
+text_color: "#333333"
+description_color: "#666666"
+
+# Link styling
+link_style:
+  background_color: "#0077cc"
+  text_color: "#ffffff"
+  border_radius: "8px"
+  border: "none"
+  shadow: true
+  hover:
+    transform: true
+    background_color: "#005fa3"
+    shadow_increase: true
+
+# Card styling
+card_style:
+  padding: "14px 20px"
+  margin_bottom: "12px"
+  display_icon: false
+  icon_position: "left"
+
+# Avatar styling
+avatar_style:
+  size: "120px"
+  border: "3px solid #fff"
+  shadow: true
+
+# Container styling
+container_style:
+  max_width: "600px"
+  padding: "30px 20px"
+  border_radius: "10px"
+  shadow: true
+
+# Animation
+animations:
+  link_hover: true
+  page_load: false
