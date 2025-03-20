@@ -77,7 +77,12 @@ This application provides a clean, customizable single-page website to organize 
          - AVATAR_PATH=/config/avatar.png
    ```
 
-3. **Create or download the configuration file**:
+3. **Change to the config directory**:
+    ```bash
+      cd config
+    ```
+
+4. **Create or download the configuration file - config.yaml**:
 
    ```yaml
    # Basic Information
@@ -120,20 +125,20 @@ This application provides a clean, customizable single-page website to organize 
      show_social_icons: true
    ```
 
-4. **Add your avatar image**:
+5. **Add your avatar image**:
 
    ```bash
    # Copy your avatar image to the config directory
    cp /path/to/your/avatar.png config/avatar.png
    ```
 
-5. **Start the container**:
+6. **Start the container**:
 
    ```bash
    docker-compose up -d
    ```
 
-6. **Access your Linktree page** at `http://your-server-ip:5000`
+7. **Access your Linktree page** at `http://your-server-ip:5000`
 
 ### Alternative Deployment with Direct Docker Run
 
@@ -143,8 +148,8 @@ If you prefer not to use Docker Compose, you can run the container directly:
 # Create the necessary directories
 mkdir -p ./config ./templates/custom
 
-# Create the config.yaml file (see step 3 above)
-# Add your avatar.png file (see step 4 above)
+# Create the config.yaml file (see steps 3 + 4 above)
+# Add your avatar.png file (see step 5 above)
 
 # Run the Docker container
 docker run -d \
