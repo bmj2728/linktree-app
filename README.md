@@ -28,9 +28,8 @@ This application provides a clean, customizable single-page website to organize 
 - **Card-like design** for links with icon support
 - **Section headings** for organizing links
 - **Link descriptions** for additional context
-- **Multiple theme options** including Brian Jipson inspired theme
 - **Simple theme configuration** without requiring CSS knowledge
-- **Custom template support**
+- **Multiple theme options + Custom template support**
 - **Docker support** with runtime configuration injection
 - **Volume mapping** for config, custom themes, and avatar image
 
