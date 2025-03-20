@@ -265,7 +265,7 @@ You can create your own theme by adding a YAML file to the `templates/custom` di
 
 ## Icon Selection
 
-The application supports [Font Awesome icons](https://fontawesome.com/icons). To use an icon:
+The application supports [Font Awesome icons](https://www.w3schools.com/icons/fontawesome5_icons_brands.asp). To use an icon:
 
 1. Browse the Font Awesome library to find an icon you like
 2. Note the icon name (e.g., `fa-github`)

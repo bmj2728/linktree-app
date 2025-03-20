@@ -12,5 +12,5 @@ services:
     restart: unless-stopped
     environment:
       - CONFIG_PATH=/config/config.yaml
-      - TEMPLATES_PATH=/templates
+      - TEMPLATES_PATH=/templates/default
       - AVATAR_PATH=/config/avatar.png
